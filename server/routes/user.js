@@ -18,7 +18,7 @@ router.get("/alluser",async (req,res)=>{
 
 router.delete("/deleteall",async (req,res)=>{
     try {
-        const allDelete = await User.remove({});
+        const allDelete = await User.deleteMany();
         res.status(200).json({message:"all data deleted"})
     } catch (error) {
         res.status(511).json({message:error.message})
