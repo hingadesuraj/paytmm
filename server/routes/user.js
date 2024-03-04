@@ -2,6 +2,7 @@ const express = require("express");
 const zod = require("zod");
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
+const authMiddleware = require("../middleware");
 const router = express.Router();
 
 // get all user
@@ -117,5 +118,26 @@ router.post("/signin", async (req, res) => {
     });
   }
 });
+
+
+// update user info
+
+router.put("/",authMiddleware, async (req,res)=>{
+    const userId = req.userId
+    
+    const checkUserById = await User.findById(userId);
+
+    // console.log(checkUserById)
+
+    const updateUser = await User.findByIdAndUpdate(userId,{
+        password:req.body.password,
+        firstName:req.body.firstName,
+        lastName:req.body.lastName
+
+    })
+
+    res.status(200).json({message:"User information updated..!",updateUser})
+
+})
 
 module.exports = router;
