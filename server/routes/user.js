@@ -4,6 +4,27 @@ const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
 
+// get all user
+router.get("/alluser",async (req,res)=>{
+    try {
+        const allUser = await User.find({});
+        res.status(200).json({allUser});
+    } catch (error) {
+        res.status(511).json({message:error.message})
+    }
+})
+
+// delete user all
+
+router.delete("/deleteall",async (req,res)=>{
+    try {
+        const allDelete = await User.remove({});
+        res.status(200).json({message:"all data deleted"})
+    } catch (error) {
+        res.status(511).json({message:error.message})
+    }
+})
+
 // zod validation
 const signupBody = zod.object({
   username: zod.string(),
