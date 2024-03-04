@@ -78,11 +78,43 @@ router.post("/signup", async (req, res) => {
   });
 });
 
+// user signin route
+// Method: POST
+// Route: /api/v1/user/signin
 
-// user signin route 
+const signinBody = zod.object({
+  username: zod.string(),
+  password: zod.string(),
+});
 
+router.post("/signin", async (req, res) => {
+  const { success } = signinBody.safeParse(req.body);
 
+  if (!success) {
+    res
+      .status(411)
+      .json({ message: "Please check proper email address and username" });
+  }
 
+  console.log(req.body);
 
+  const user = await User.findOne({
+    username: req.body.username,
+    password: req.body.password,
+  });
+
+  if (user) {
+    const token = jwt.sign(
+      {
+        userId: user._id,
+      },
+      "surajhingade"
+    );
+
+    res.json({
+      token: token,
+    });
+  }
+});
 
 module.exports = router;
