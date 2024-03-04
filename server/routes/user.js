@@ -140,8 +140,10 @@ router.put("/", authMiddleware, async (req, res) => {
 // search route using query parameter 
 
 router.get("/bulk", async (req, res) => {
+    // get query data
     const filter = req.query.filter || "";
 
+    // check query data in Database 
     const users = await User.find({
         $or: [{
             firstName: {
@@ -154,6 +156,7 @@ router.get("/bulk", async (req, res) => {
         }]
     })
 
+    // if find send user informatiom
     res.json({
         user: users.map(user => ({
             username: user.username,
