@@ -104,6 +104,7 @@ router.post("/signin", async (req, res) => {
   });
 
   if (user) {
+    // send jwt token to verify
     const token = jwt.sign(
       {
         userId: user._id,
