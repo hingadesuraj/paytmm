@@ -44,7 +44,7 @@ router.post("/signup", async (req, res) => {
     });
   }
 
-  //    console.log(req.body)
+  //    console.log(req.body)  
   // check user exist in db or not using username
   const existingUser = await User.findOne({
     username: req.body.username,
