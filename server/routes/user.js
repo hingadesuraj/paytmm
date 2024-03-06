@@ -1,21 +1,22 @@
 const express = require("express");
 const zod = require("zod");
-const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const authMiddleware = require("../middleware");
+const User = require("../models/user");
+const Account = require("../models/accountSchema");
 const router = express.Router();
 
 // get all user
 router.get("/alluser", async (req, res) => {
   try {
-    const allUser = await User.find({});
+    const allUser = await User.find(); 
     res.status(200).json({ allUser });
   } catch (error) {
     res.status(511).json({ message: error.message });
   }
 });
 
-// delete user all
+// delete user all 
 router.delete("/deleteall", async (req, res) => {
   try {
     const allDelete = await User.deleteMany();
@@ -59,7 +60,7 @@ router.post("/signup", async (req, res) => {
   //    console.log(existingUser);
   //   save to db
   // const userData = new User.create({ // error in these line
-  const userData = User.create({
+  const userData = await User.create({
     username: req.body.username,
     password: req.body.password,
     firstName: req.body.firstName,
@@ -68,6 +69,15 @@ router.post("/signup", async (req, res) => {
 
   // after create user then fetch user id ._id;
   const userId = userData._id;
+  // console.log({userId})
+
+  	/// ----- Create new account ------ and give some dummy money
+    await Account.create({   
+      userId,
+      balance: 1 + Math.random() * 10000
+  })
+
+  /// -----  ------
 
   // create jwt token to verify user token = userId + jwtSecrate
   const token = jwt.sign({ userId }, "surajhingade");
