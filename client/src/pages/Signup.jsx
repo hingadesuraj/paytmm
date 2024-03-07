@@ -1,9 +1,32 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios'
 
 const Signup = () => {
+
+  const navigate = useNavigate();
+
+  const [firstName,setFirstName] = useState("");
+  const [lastName,setlastName] = useState("");
+  const [email,setEmail] = useState("");
+  const [password,setPassword] = useState("");
+
+
+  const handleSubmit= async ()=>{
+    // console.log(firstName+lastName+email+password);
+    const response = await axios.post("http://localhost:3000/api/v1/user/signup",{
+      username:email,
+      password:password,
+      firstName:firstName,
+      lastName:lastName
+    })
+    localStorage.setItem("token", response.data.token)
+    navigate("/dashboard")
+    
+  }
+
   return (
-    <div className=" min-h-full m-4  flex flex-wrap justify-center items-center">
+   <div className=" min-h-full m-4  flex flex-wrap justify-center items-center">
       <div className=" p-2 m-2 shadow-md rounded-md">
         <div className="flex flex-col justify-center items-center">
           <h2 className="text-4xl font-bold">Sign Up</h2>
@@ -17,6 +40,7 @@ const Signup = () => {
             type="text"
             placeholder="First Name"
             className="border-2 rounded-md border-gray-300 outline-none p-2"
+            onChange={(e)=>setFirstName(e.target.value)}
           />
         </div>
         <div className=" flex flex-col">
@@ -25,6 +49,7 @@ const Signup = () => {
             type="text"
             placeholder="Last Name"
             className="border-2 rounded-md border-gray-300 outline-none p-2"
+            onChange={(e)=>setlastName(e.target.value)}
           />
         </div>
         <div className=" flex flex-col">
@@ -33,6 +58,7 @@ const Signup = () => {
             type="email"
             placeholder="Email"
             className="border-2 rounded-md border-gray-300 outline-none p-2"
+            onChange={(e)=>setEmail(e.target.value)}
           />
         </div>
         <div className=" flex flex-col">
@@ -41,10 +67,11 @@ const Signup = () => {
             type="password"
             placeholder="Password"
             className="border-2 rounded-md border-gray-300 outline-none p-2"
+            onChange={(e)=>setPassword(e.target.value)}
           />
         </div>
         <div className="flex flex-col justify-center items-center">
-          <button className="bg-black text-white w-full rounded-md py-2 mt-4 font-semibold">
+          <button onClick={handleSubmit} className="bg-black text-white w-full rounded-md py-2 mt-4 font-semibold">
             Sign up
           </button>
           <p className="text-gray-400 my-2">
