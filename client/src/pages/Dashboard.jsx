@@ -67,7 +67,7 @@ const Dashboard = () => {
                 Send Money
               </button>
             </div>
-            {/* ------------------------------------------------- */}
+            {/* --------------------------------------------------- */}
             {/* re-use compontnt */}
             <div className="flex justify-between items-center mt-4">
               <p>
@@ -89,9 +89,32 @@ const Dashboard = () => {
         onRequestClose={() => setModalOpen(false)}
         style={customStyles}
       >
-        <div>Login/Signup</div>
+        {/* <div>Login/Signup</div> */}
+        {/* design modal */}
 
-        <button onClick={() => setModalOpen(false)}>Close Modal</button>
+        <div>
+          {/* heading */}
+          <div className="flex justify-center items-center mb-2" >
+            <h1 className="text-3xl font-semibold">Send Money</h1>
+          </div>
+          {/* middle part username */}
+          <div>
+            {/* username and icon */}
+              <div>
+                <p className="text-xl font-semibold" ><span className=" text-center m-2 mr-3 p-2 px-3 font-bold bg-green-500 rounded-full" >S</span>Friend Name : Suraj</p>
+              </div>
+              <div className="flex flex-col" >
+              <label className=" font-semibold my-2" >Amount (in Rs)</label>
+              <input className="w-full outline-none border-2 rounded-md py-2 px-2" type="text" placeholder="Enter Money" />
+              </div>
+              <div  >
+                <button className=" w-full p-2 my-2 bg-green-500 text-white font-medium rounded-md" >Initiate Transfer</button>
+              </div>
+             
+          </div>
+        </div>
+
+        <button  className=" bg-gray-400 font-bold text-white p-2 rounded-md" onClick={() => setModalOpen(false)}>Close Modal</button>
       </Modal>
             </div>
           </div>
