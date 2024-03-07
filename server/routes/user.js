@@ -177,4 +177,18 @@ router.get("/bulk", async (req, res) => {
     })
 })
 
+
+// get User information with authenticated
+
+router.get("/userinfo",authMiddleware,async (req,res)=>{
+     const userId = req.userId
+    //  console.log(userId)
+    try{
+    const userInfo = await User.findById(userId);
+    res.status(200).json({userInfo})
+    }catch(error){
+      res.status(411).json({message:error.message})
+    }
+})
+
 module.exports = router;
