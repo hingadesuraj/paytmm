@@ -68,9 +68,6 @@ const Dashboard = () => {
       ? userInformation.firstName.split("")[0]
       : "";
 
-
-  // const initialLetterUser = users && users.firstName ? users.firstName.split('')[1] :""
-
   useEffect(() => {
     getData();
     getAccountBalance();
@@ -110,6 +107,7 @@ const Dashboard = () => {
               type="text"
               className=" w-full outline-none border-2 py-2 px-2 rounded-md"
               placeholder="Search User..."
+              onChange={(e) => setFilter(e.target.value)}
             />
           </div>
           {/* user render  */}
@@ -133,7 +131,7 @@ const Dashboard = () => {
                 Send Money
               </button>
             </div> */}
-            {users.map((data,index) => {
+            {users.map((data, index) => {
               return (
                 <>
                   <div className="flex justify-between items-center mt-4">
@@ -143,8 +141,7 @@ const Dashboard = () => {
                         className="border-2 px-2 py-2  m-2 bg-gray-300"
                         style={{ borderRadius: "50%" }}
                       >
-                        
-                        U{index+1}
+                        U{index + 1}
                       </span>{" "}
                       {data.firstName}
                     </p>
