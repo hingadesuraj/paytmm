@@ -19,6 +19,8 @@ const Dashboard = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [userInformation, setUserInformation] = useState([]);
   const [token, setToken] = useState(localStorage.getItem("token"));
+  const [accountInfo,setAccountInfo] = useState([]);
+ 
 
   const getData = async () => {
     const response = await axios.get(
@@ -34,12 +36,33 @@ const Dashboard = () => {
     setUserInformation(response.data.userInfo);
   };
 
+  // getting account balance
+
+  const getAccountBalance = async()=>{
+    const response = await axios.get("http://localhost:3000/api/v1/account/balance",{
+      headers:{
+        'Authorization':'Bearer '+token
+      }
+    })
+    setAccountInfo(response.data)
+    // console.log(response.data.balance);
+  }
+
+
+ // Check if userInformation is defined before accessing its properties
+const initialLetter = userInformation && userInformation.firstName ? userInformation.firstName.split("")[0] : '';
+
+
   useEffect(() => {
     getData();
+    getAccountBalance();
   }, [token]);
 
   // console.log(localStorage.getItem("token"));
-  console.log(userInformation)
+  // console.log(userInformation )
+
+
+ 
 
   return (
     <div className=" m-4 ">
@@ -52,13 +75,13 @@ const Dashboard = () => {
             className="border-2 px-3 py-2  m-2 bg-gray-300"
             style={{ borderRadius: "50%" }}
           >
-            {userInformation.firstName.split("")[0]}
+           {initialLetter}
           </span>
         </h3>
       </div>
       {/* show balance login user  */}
       <div>
-        <p className="text-lg font-bold  py-2">Your Balance : ₹ {5000}</p>
+        <p className="text-lg font-bold  py-2">Your Balance : ₹ {accountInfo.balance}</p>
       </div>
       {/* existing user from database with search box */}
       <div>
