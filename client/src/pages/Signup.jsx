@@ -7,7 +7,7 @@ const Signup = () => {
       <div className=" p-2 m-2 shadow-md rounded-md">
         <div className="flex flex-col justify-center items-center">
           <h2 className="text-4xl font-bold">Sign Up</h2>
-          <p className="text-lg text-gray-400 py-2">
+          <p className="text-lg text-gray-400 py-2 ">
             Enter Your Information to create an account
           </p>
         </div>
