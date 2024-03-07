@@ -1,6 +1,24 @@
 import React from "react";
+import { useState } from "react";
+import Modal from "react-modal";
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    backgroundColor: "white",
+    width: 400,
+  },
+};
 
 const Dashboard = () => {
+
+  const [modalOpen, setModalOpen] = useState(false);
+
+
   return (
     <div className=" m-4 ">
       {/* upper */}
@@ -45,7 +63,7 @@ const Dashboard = () => {
                 </span>{" "}
                 Pavan
               </p>
-              <button className="border-2 p-2 rounded-md bg-gray-400 text-white font-semibold">
+              <button onClick={setModalOpen} className="border-2 p-2 rounded-md bg-gray-400 text-white font-semibold">
                 Send Money
               </button>
             </div>
@@ -62,9 +80,19 @@ const Dashboard = () => {
                 </span>{" "}
                 Suraj
               </p>
-              <button className="border-2 p-2 rounded-md bg-gray-400 text-white font-semibold">
+              <button onClick={setModalOpen} className="border-2 p-2 rounded-md bg-gray-400 text-white font-semibold">
                 Send Money
               </button>
+              {/* Modal */}
+              <Modal
+        isOpen={modalOpen}
+        onRequestClose={() => setModalOpen(false)}
+        style={customStyles}
+      >
+        <div>Login/Signup</div>
+
+        <button onClick={() => setModalOpen(false)}>Close Modal</button>
+      </Modal>
             </div>
           </div>
         </div>
