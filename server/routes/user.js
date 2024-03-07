@@ -184,7 +184,8 @@ router.get("/userinfo",authMiddleware,async (req,res)=>{
      const userId = req.userId
     //  console.log(userId)
     try{
-    const userInfo = await User.findById(userId);
+    const userInfo = await User.findById(userId).select('-password');
+    
     res.status(200).json({userInfo})
     }catch(error){
       res.status(411).json({message:error.message})

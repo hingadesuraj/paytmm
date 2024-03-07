@@ -1,4 +1,5 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import Modal from "react-modal";
 const customStyles = {
@@ -17,7 +18,24 @@ const customStyles = {
 const Dashboard = () => {
 
   const [modalOpen, setModalOpen] = useState(false);
+  const [userInfo,setUserInfo] = useState([]);
+  const [token,setToken] = useState(localStorage.getItem('token'));
 
+  const getData = async ()=>{
+    const response = await axios.get("http://localhost:3000/api/v1/user/userinfo",{
+      headers:{
+        'Authorization' : 'Bearer '+token
+      }
+    });
+      console.log(response.data);
+
+  }
+
+  useEffect(()=>{
+      getData();
+  },[])
+
+  console.log(localStorage.getItem("token"))
 
   return (
     <div className=" m-4 ">
@@ -36,7 +54,7 @@ const Dashboard = () => {
       </div>
       {/* show balance login user  */}
       <div>
-        <p className="text-lg font-bold  py-2">Your Balance : ₹ 5000</p>
+        <p className="text-lg font-bold  py-2">Your Balance : ₹ {5000}</p>
       </div>
       {/* existing user from database with search box */}
       <div>
