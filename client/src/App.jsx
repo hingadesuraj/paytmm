@@ -7,9 +7,9 @@ import SendMoney from "./pages/SendMoney";
 
 function App() {
   return (
-    <>
+    <div className=" ">
       <BrowserRouter>
-      <h1>Hello from paytm</h1>
+      {/* <h1>Hello from paytm</h1> */}
         <Routes>
           <Route path="/signup" element={<Signup />} />
           <Route path="/signin" element={<Signin />} />
@@ -17,7 +17,7 @@ function App() {
           <Route path="/send" element={<SendMoney />} />
         </Routes>
       </BrowserRouter>
-    </>
+    </div>
   );
 }
 
