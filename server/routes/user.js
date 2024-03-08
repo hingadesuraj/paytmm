@@ -12,7 +12,7 @@ router.get("/alluser", async (req, res) => {
     const allUser = await User.find(); 
     res.status(200).json({ allUser });
   } catch (error) {
-    res.status(511).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 });
 
@@ -35,7 +35,7 @@ const signupBody = zod.object({
 });
 
 // POST : User create
-router.post("/signup", async (req, res) => {
+router.post("/signup", async (req, res,next) => {
   // parse data in zod validation object using safeParse and then return success or error message
   const { success } = signupBody.safeParse(req.body);
 
@@ -82,11 +82,16 @@ router.post("/signup", async (req, res) => {
   // create jwt token to verify user token = userId + jwtSecrate
   const token = jwt.sign({ userId }, "surajhingade");
   //    const token = jwt.sign({ userId }, process.env.JWT_SECRET);
+try{
 
   res.status(200).json({
     msg: "User Created...",
     token: token,
   });
+}catch(error){
+  // res.status(500).json({message:"User Exist or some thing went wrong"})
+  next(error);
+}
 });
 
 // user signin route
