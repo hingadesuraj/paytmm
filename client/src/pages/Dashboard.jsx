@@ -94,16 +94,18 @@ const Dashboard = () => {
       const response = await axios.post(
         "http://localhost:3000/api/v1/account/transfer",
         {
-          to: token, // Assuming token is the recipient's identifier
+          to: selectedUser._id, // Assuming token is the recipient's identifier
           amount: modalInput, // Assuming modalInput contains the amount to transfer
         },
         {
           headers: {
             Authorization: "Bearer " + token,
-          },
+          }, 
         }
       );
-      alert(response.data);
+      alert(response.data.message);
+      // console.log(response.data)
+      window.location.reload();
     } catch (error) {
       console.error("Error transferring funds:", error);
       // Handle error accordingly
@@ -118,7 +120,8 @@ const Dashboard = () => {
 
   // console.log(localStorage.getItem("token"));
   // console.log(userInformation )
-  // console.log(selectedUser)
+  // console.log(selectedUser._id)
+  
 
   return (
     <div className=" m-4 ">
