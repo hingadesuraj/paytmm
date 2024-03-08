@@ -159,12 +159,12 @@ router.get("/bulk", async (req, res) => {
             firstName: {
                 "$regex": filter
             }
-        }, {
-            lastName: {
+        }, { 
+            lastName: { 
                 "$regex": filter
             }
         }]
-    })
+    }) 
 
     // if find send user informatiom
     res.json({

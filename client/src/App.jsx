@@ -9,7 +9,7 @@ function App() {
   return (
     <div className=" ">
       <BrowserRouter>
-      {/* <h1>Hello from paytm</h1> */}
+        {/* <h1>Hello from paytm</h1> */}
         <Routes>
           <Route path="/signup" element={<Signup />} />
           <Route path="/signin" element={<Signin />} />

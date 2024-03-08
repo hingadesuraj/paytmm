@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import Modal from "react-modal";
+import { useNavigate } from "react-router-dom";
 
 const customStyles = {
   content: {
@@ -17,6 +18,9 @@ const customStyles = {
 };
 
 const Dashboard = () => {
+
+  const navigate = useNavigate()
+
   const [modalOpen, setModalOpen] = useState(false);
   const [userInformation, setUserInformation] = useState([]);
   const [token, setToken] = useState(localStorage.getItem("token"));
@@ -68,6 +72,13 @@ const Dashboard = () => {
       ? userInformation.firstName.split("")[0]
       : "";
 
+  // handleLogout
+
+  const handleLogout=()=>{
+    localStorage.removeItem('token');
+    navigate('/signin')
+  }
+
   useEffect(() => {
     getData();
     getAccountBalance();
@@ -90,6 +101,7 @@ const Dashboard = () => {
           >
             {initialLetter.toUpperCase()}
           </span>
+          <span className="border-2 p-2 rounded-md bg-gray-500 text-white cursor-pointer " onClick={handleLogout} >Logout</span>
         </h3>
       </div>
       {/* show balance login user  */}
