@@ -22,6 +22,7 @@ const Signup = () => {
     })
     localStorage.setItem("token", response.data.token)
     navigate("/dashboard")
+    window.location.reload()
     
   }
 
