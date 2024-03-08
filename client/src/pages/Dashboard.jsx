@@ -112,6 +112,8 @@ const Dashboard = () => {
     }
   };
 
+  //Question Why handleTransfer function put in dependency array of useEffect the take number of request to server find out solution  
+
   useEffect(() => {
     getData();
     getAccountBalance();
