@@ -163,7 +163,7 @@ router.get("/bulk", async (req, res) => {
             lastName: { 
                 "$regex": filter
             }
-        }]
+        }]   
     }) 
 
     // if find send user informatiom

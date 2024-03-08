@@ -18,13 +18,14 @@ const customStyles = {
 };
 
 const Dashboard = () => {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [modalOpen, setModalOpen] = useState(false);
   const [userInformation, setUserInformation] = useState([]);
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [accountInfo, setAccountInfo] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null); // State to hold selected user
+  const [modalInput, setModalInput] = useState("");
 
   const [users, setUsers] = useState([]);
   const [filter, setFilter] = useState("");
@@ -60,7 +61,7 @@ const Dashboard = () => {
   // get all User and render it
   const getAllUser = async () => {
     const response = await axios.get(
-      "http://localhost:3000/api/v1/user/bulk?filter=" + filter
+      "http://localhost:3000/api/v1/user/bulk?filter=" + filter.toLowerCase()
     );
     setUsers(response.data.user);
     // console.log(response.data.user);
@@ -74,10 +75,40 @@ const Dashboard = () => {
 
   // handleLogout
 
-  const handleLogout=()=>{
-    localStorage.removeItem('token');
-    navigate('/signin')
-  }
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/signin");
+    window.location.reload();
+  };
+
+  // open modal
+  const openModal = (user) => {
+    setSelectedUser(user);
+    setModalOpen(true);
+  };
+
+  // transfer money
+
+  const handleTransfer = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/v1/account/transfer",
+        {
+          to: token, // Assuming token is the recipient's identifier
+          amount: modalInput, // Assuming modalInput contains the amount to transfer
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      alert(response.data);
+    } catch (error) {
+      console.error("Error transferring funds:", error);
+      // Handle error accordingly
+    }
+  };
 
   useEffect(() => {
     getData();
@@ -87,6 +118,7 @@ const Dashboard = () => {
 
   // console.log(localStorage.getItem("token"));
   // console.log(userInformation )
+  // console.log(selectedUser)
 
   return (
     <div className=" m-4 ">
@@ -101,7 +133,12 @@ const Dashboard = () => {
           >
             {initialLetter.toUpperCase()}
           </span>
-          <span className="border-2 p-2 rounded-md bg-gray-500 text-white cursor-pointer " onClick={handleLogout} >Logout</span>
+          <span
+            className="border-2 p-2 rounded-md bg-gray-500 text-white cursor-pointer "
+            onClick={handleLogout}
+          >
+            Logout
+          </span>
         </h3>
       </div>
       {/* show balance login user  */}
@@ -158,7 +195,7 @@ const Dashboard = () => {
                       {data.firstName}
                     </p>
                     <button
-                      onClick={setModalOpen}
+                      onClick={() => openModal(data)}
                       className="border-2 p-2 rounded-md bg-gray-400 text-white font-semibold"
                     >
                       Send Money
@@ -190,7 +227,7 @@ const Dashboard = () => {
                       <span className=" text-center m-2 mr-3 p-2 px-3 font-bold bg-green-500 rounded-full">
                         S
                       </span>
-                      Friend Name : Suraj
+                      Friend Name : {selectedUser?.firstName}
                     </p>
                   </div>
                   <div className="flex flex-col">
@@ -201,10 +238,11 @@ const Dashboard = () => {
                       className="w-full outline-none border-2 rounded-md py-2 px-2"
                       type="text"
                       placeholder="Enter Money"
+                      onChange={(e) => setModalInput(e.target.value)}
                     />
                   </div>
                   <div>
-                    <button className=" w-full p-2 my-2 bg-green-500 text-white font-medium rounded-md">
+                    <button onClick={handleTransfer} className=" w-full p-2 my-2 bg-green-500 text-white font-medium rounded-md">
                       Initiate Transfer
                     </button>
                   </div>
