@@ -63,7 +63,7 @@ const Dashboard = () => {
       "http://localhost:3000/api/v1/user/bulk?filter=" + filter
     );
     setUsers(response.data.user);
-    console.log(response.data.user);
+    // console.log(response.data.user);
   };
 
   // Check if userInformation is defined before accessing its properties
