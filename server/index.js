@@ -9,6 +9,7 @@ const rootRouter = require("./routes/index");  // import root router
 
 app.use(express.json());
 app.use(cors());
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
