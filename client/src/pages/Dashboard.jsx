@@ -78,6 +78,7 @@ const Dashboard = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/");
+    localStorage.clear();
     window.location.reload();
   };
 
