@@ -90,7 +90,7 @@ try{
   });
 }catch(error){
   // res.status(500).json({message:"User Exist or some thing went wrong"})
-  next(error);
+  next("User Exist or some thing went wrong");
 }
 });
 
@@ -103,7 +103,7 @@ const signinBody = zod.object({
   password: zod.string(),
 });
 
-router.post("/signin", async (req, res) => {
+router.post("/signin", async (req, res,next) => {
   const { success } = signinBody.safeParse(req.body);
 
   if (!success) {
@@ -128,15 +128,20 @@ router.post("/signin", async (req, res) => {
       "surajhingade"
     );
 
-    res.json({
-      token: token,
-    });
+    try{
+
+      res.json({
+        token: token,
+      });
+    }catch(error){
+      next(error.message)
+    }
   }
 });
 
 // update user info
 
-router.put("/", authMiddleware, async (req, res) => {
+router.put("/", authMiddleware, async (req, res,next) => {
   const userId = req.userId;
 
   const checkUserById = await User.findById(userId);
@@ -171,6 +176,9 @@ router.get("/bulk", async (req, res) => {
         }]   
     }) 
 
+    try{
+
+    
     // if find send user informatiom
     res.json({
         user: users.map(user => ({
@@ -180,12 +188,15 @@ router.get("/bulk", async (req, res) => {
             _id: user._id
         }))
     })
+  }catch(error){
+    next(error.message)
+  }
 })
 
 
 // get User information with authenticated
 
-router.get("/userinfo",authMiddleware,async (req,res)=>{
+router.get("/userinfo",authMiddleware,async (req,res,next)=>{
      const userId = req.userId
     //  console.log(userId)
     try{
@@ -194,6 +205,7 @@ router.get("/userinfo",authMiddleware,async (req,res)=>{
     res.status(200).json({userInfo})
     }catch(error){
       res.status(411).json({message:error.message})
+      next(error.message)
     }
 })
 

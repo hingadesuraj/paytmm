@@ -6,7 +6,7 @@ const router = express.Router();
 
 // Method: GET  Route: /api/v1/account/balance
 
-router.get("/balance", authMiddleware, async (req, res) => {
+router.get("/balance", authMiddleware, async (req, res,next) => {
   // const userId = req.userId
   // console.log(userId)
 
@@ -25,11 +25,12 @@ router.get("/balance", authMiddleware, async (req, res) => {
     });
   } catch (error) {
     res.status(411).json({ message: "Something went wrong" });
+    next(error.message)
   }
 });
 
 // Method: POST  Route: /api/v1/account/transfer
-router.post("/transfer", authMiddleware, async (req, res) => {
+router.post("/transfer", authMiddleware, async (req, res,next) => {
   const { to, amount } = req.body;
 
   const account = await Account.findOne({
@@ -84,7 +85,8 @@ router.post("/transfer", authMiddleware, async (req, res) => {
       message: "Transfer successful",
     });
   }catch(error){
-    console.log(error.message)
+    // console.log(error.message)
+    next(error.message)
   }
 });
 
