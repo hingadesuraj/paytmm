@@ -32,7 +32,7 @@ const Dashboard = () => {
 
   const getData = async () => {
     const response = await axios.get(
-      "http://localhost:3000/api/v1/user/userinfo",
+      "https://paytmm-surajs-projects-3dd6a32b.vercel.app/api/v1/user/userinfo",
       {
         headers: {
           Authorization: "Bearer " + token,
