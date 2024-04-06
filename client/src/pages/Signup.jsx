@@ -14,7 +14,8 @@ const Signup = () => {
 
   const handleSubmit= async ()=>{
     // console.log(firstName+lastName+email+password);
-    const response = await axios.post("http://localhost:3000/api/v1/user/signup",{
+    const response = await axios.post("https://paytmm-surajs-projects-3dd6a32b.vercel.app//api/v1/user/signup",{
+    // const response = await axios.post("http://localhost:3000/api/v1/user/signup",{
       username:email,
       password:password,
       firstName:firstName,

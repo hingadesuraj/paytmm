@@ -13,7 +13,7 @@ const Signin = () => {
   const handleLogin = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/v1/user/signin",
+        "https://paytmm-surajs-projects-3dd6a32b.vercel.app/api/v1/user/signin",
         {
           username: username,
           password: password,
@@ -28,8 +28,9 @@ const Signin = () => {
     }
   };
 
-
-  // console.log(token)
+// https://paytmm-surajs-projects-3dd6a32b.vercel.app/
+// http://localhost:3000/
+// console.log(token)
 
   return (
     <div>

@@ -46,8 +46,9 @@ const Dashboard = () => {
 
   // getting account balance
   const getAccountBalance = async () => {
+    // http://localhost:3000/
     const response = await axios.get(
-      "http://localhost:3000/api/v1/account/balance",
+      "https://paytmm-surajs-projects-3dd6a32b.vercel.app/api/v1/account/balance",
       {
         headers: {
           Authorization: "Bearer " + token,
@@ -61,7 +62,7 @@ const Dashboard = () => {
   // get all User and render it
   const getAllUser = async () => {
     const response = await axios.get(
-      "http://localhost:3000/api/v1/user/bulk?filter=" + filter.toLowerCase()
+      "https://paytmm-surajs-projects-3dd6a32b.vercel.app/api/v1/user/bulk?filter=" + filter.toLowerCase()
     );
     setUsers(response.data.user);
     // console.log(response.data.user);
@@ -93,7 +94,7 @@ const Dashboard = () => {
   const handleTransfer = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/v1/account/transfer",
+        "https://paytmm-surajs-projects-3dd6a32b.vercel.app/api/v1/account/transfer",
         {
           to: selectedUser._id, // Assuming token is the recipient's identifier
           amount: modalInput, // Assuming modalInput contains the amount to transfer
